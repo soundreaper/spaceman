@@ -70,12 +70,14 @@ def letter_checker():
         if formatted_guess.isalpha():
             if len(guess) > 1:
                 print("The entry was invalid.")
+                print("---------------------------------------------------")
                 continue
             else:
                 return guess
                 break
         else:
             print("The entry was invalid.")
+            print("---------------------------------------------------")
             continue
 
 def spaceman(secret_word):
@@ -93,55 +95,62 @@ def spaceman(secret_word):
     print(get_guessed_word(secret_word, guess))
     print(is_guess_in_word("w", secret_word))
     '''
+    play = True
+    while play:
+        #TODO: show the player information about the game according to the project spec
+        print("Welcome to the Spaceman Game!")
+        print("The secret word contains " + str(len(secret_word)) + " letters.")
+        #TODO: Ask the player to guess one letter per round and check that it is only one letter
+        #TODO: Check if the guessed letter is in the secret or not and give the player feedback
+        #TODO: show the guessed word so far
+        #TODO: check if the game has been won or lost
 
-    #TODO: show the player information about the game according to the project spec
-    print("Welcome to the Spaceman Game!")
-    print("The secret word contains " + str(len(secret_word)) + " letters.")
-    #TODO: Ask the player to guess one letter per round and check that it is only one letter
-    #TODO: Check if the guessed letter is in the secret or not and give the player feedback
-    #TODO: show the guessed word so far
-    #TODO: check if the game has been won or lost
+        word_guessed_status = False
+        guess = ""
+        guessed_letters = []
+        guesses_left = 7
 
-    word_guessed_status = False
-    guess = ""
-    guessed_letters = []
-    guesses_left = len(secret_word)
+        while guesses_left > 0 and guesses_left <= 7 and word_guessed_status is False:
+            if secret_word == get_guessed_word(secret_word, guessed_letters):
+                word_guessed_status = True
+                break
+            print("You have " + str(guesses_left) + " guesses left.")
+            print("---------------------------------------------------")
 
-    while guesses_left > 0 and guesses_left <= len(secret_word) and word_guessed_status is False:
-        if secret_word == get_guessed_word(secret_word, guessed_letters):
-            word_guessed_status = True
+            guess = letter_checker()
+
+            if guess in secret_word:
+                if guess in guessed_letters:
+                    print("Letter already guessed: " +
+                            get_guessed_word(secret_word, guessed_letters))
+                    is_word_guessed(secret_word, guessed_letters)
+                    print("---------------------------------------------------")
+                else:
+                    guessed_letters.append(guess)
+                    print("Guess in word: " +
+                            get_guessed_word(secret_word, guessed_letters))
+                    print("---------------------------------------------------")
+            else:
+                if guess in guessed_letters:
+                    print("Already guessed that letter: " +
+                            get_guessed_word(secret_word, guessed_letters))
+                    print("---------------------------------------------------")
+                else:
+                    guessed_letters.append(guess)
+                    guesses_left -= 1
+                    print("Letter is not in the word: " +
+                            get_guessed_word(secret_word, guessed_letters))
+                    print("---------------------------------------------------")
+        if is_word_guessed(secret_word, guessed_letters):
+            print("You won!")
+        elif guesses_left == 0:
+            print("Game Over, you ran out of guesses. The word was " + secret_word + "!\n")
+    
+        again = input("Play again? Type y or n: ")
+        if again == "y":
+            secret_word = load_word()
+        elif again == "n":
             break
-        print("You have " + str(guesses_left) + " guesses left.")
-        print("---------------------------------------------------")
-
-        guess = letter_checker()
-
-        if guess in secret_word:
-            if guess in guessed_letters:
-                print("Letter already guessed: " +
-                      get_guessed_word(secret_word, guessed_letters))
-                is_word_guessed(secret_word, guessed_letters)
-                print("---------------------------------------------------")
-            else:
-                guessed_letters.append(guess)
-                print("Guess in word: " +
-                      get_guessed_word(secret_word, guessed_letters))
-                print("---------------------------------------------------")
-        else:
-            if guess in guessed_letters:
-                print("Already guessed that letter: " +
-                      get_guessed_word(secret_word, guessed_letters))
-                print("---------------------------------------------------")
-            else:
-                guessed_letters.append(guess)
-                guesses_left -= 1
-                print("Letter is not in the word: " +
-                      get_guessed_word(secret_word, guessed_letters))
-                print("---------------------------------------------------")
-    if is_word_guessed(secret_word, guessed_letters):
-        print("You won!")
-    elif guesses_left == 0:
-        print("Game Over, you ran out of guesses. The word was " + secret_word + "!")
 
 #These function calls that will start the game
 secret_word = load_word()
