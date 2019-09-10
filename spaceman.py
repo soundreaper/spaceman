@@ -78,6 +78,35 @@ def letter_checker():
             print("---------------------------------------------------")
             continue
 
+def check_guess_in_word(guess, secret_word, guessed_letters, guesses_left):
+    if guess in secret_word:
+        if guess in guessed_letters:
+            print("Letter already guessed: " +
+                    get_guessed_word(secret_word, guessed_letters))
+            is_word_guessed(secret_word, guessed_letters)
+            print("---------------------------------------------------")
+            return guesses_left
+        else:
+            guessed_letters.append(guess)
+            print("Guess in word: " +
+                    get_guessed_word(secret_word, guessed_letters))
+            print("---------------------------------------------------")
+            return guesses_left
+    else:
+        if guess in guessed_letters:
+            print("Already guessed that letter: " +
+                    get_guessed_word(secret_word, guessed_letters))
+            print("---------------------------------------------------")
+            return guesses_left
+        else:
+            guessed_letters.append(guess)
+            guesses_left -= 1
+            print("Letter is not in the word: " +
+                    get_guessed_word(secret_word, guessed_letters))
+            print("---------------------------------------------------")
+            return guesses_left
+
+
 def spaceman(secret_word):
     '''
     A function that controls the game of spaceman. Will start spaceman in the command line.
@@ -117,28 +146,8 @@ def spaceman(secret_word):
 
             guess = letter_checker()
 
-            if guess in secret_word:
-                if guess in guessed_letters:
-                    print("Letter already guessed: " +
-                            get_guessed_word(secret_word, guessed_letters))
-                    is_word_guessed(secret_word, guessed_letters)
-                    print("---------------------------------------------------")
-                else:
-                    guessed_letters.append(guess)
-                    print("Guess in word: " +
-                            get_guessed_word(secret_word, guessed_letters))
-                    print("---------------------------------------------------")
-            else:
-                if guess in guessed_letters:
-                    print("Already guessed that letter: " +
-                            get_guessed_word(secret_word, guessed_letters))
-                    print("---------------------------------------------------")
-                else:
-                    guessed_letters.append(guess)
-                    guesses_left -= 1
-                    print("Letter is not in the word: " +
-                            get_guessed_word(secret_word, guessed_letters))
-                    print("---------------------------------------------------")
+            guesses_left = check_guess_in_word(guess, secret_word, guessed_letters, guesses_left)
+
         if is_word_guessed(secret_word, guessed_letters):
             print("You won!")
         elif guesses_left == 0:
