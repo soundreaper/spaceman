@@ -1,5 +1,7 @@
 import random
 
+# List comprehension makes this program so much easier than nested for loops and such.
+
 def load_word():
     '''
     A function that reads a text file of words and randomly selects one to use as the secret word
@@ -26,7 +28,7 @@ def is_word_guessed(secret_word, letters_guessed):
     '''
     # TODO: Loop through the letters in the secret_word and check if a letter is not in lettersGuessed
     space = ""
-    letters = space.join([i for i in secret_word if i in letters_guessed])
+    letters = space.join([x for x in secret_word if x in letters_guessed])
     if letters == secret_word:
         return True
     else:
@@ -41,11 +43,10 @@ def get_guessed_word(secret_word, letters_guessed):
     Returns: 
         string: letters and underscores.  For letters in the word that the user has guessed correctly, the string should contain the letter at the correct position.  For letters in the word that the user has not yet guessed, shown an _ (underscore) instead.
     '''
-
     #TODO: Loop through the letters in secret word and build a string that shows the letters that have been guessed correctly so far that are saved in letters_guessed and underscores for the letters that have not been guessed yet
-    
-
-
+    space = ""
+    guess_so_far = [x if x in letters_guessed else "_" for x in secret_word]
+    return space.join(guess_so_far)
 
 def is_guess_in_word(guess, secret_word):
     '''
@@ -57,11 +58,10 @@ def is_guess_in_word(guess, secret_word):
         bool: True if the guess is in the secret_word, False otherwise
     '''
     #TODO: check if the letter guess is in the secret word
-
-    pass
-
-
-
+    if guess in secret_word:
+        return True
+    else:
+        return False
 
 def spaceman(secret_word):
     '''
@@ -69,8 +69,15 @@ def spaceman(secret_word):
     Args:
       secret_word (string): the secret word to guess.
     '''
+
+    #TESTING
+    '''
     print(secret_word)
-    print(is_word_guessed(secret_word, ["h","e","l","w"]))
+    guess = ["h","e","l","w"]
+    print(is_word_guessed(secret_word, guess))
+    print(get_guessed_word(secret_word, guess))
+    print(is_guess_in_word("w", secret_word))
+    '''
 
     #TODO: show the player information about the game according to the project spec
 
