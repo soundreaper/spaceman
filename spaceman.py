@@ -169,6 +169,7 @@ def test_1():
 
 def test_2():
     assert get_guessed_word("tiger", ['t','i']) == "ti___"
+    assert get_guessed_word("lion", ['s']) == "____"
     assert get_guessed_word("panther", ['p','a','n','t','h','e','r']) == "panther"
 
 def test_3():
