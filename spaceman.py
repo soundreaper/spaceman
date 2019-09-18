@@ -161,4 +161,16 @@ def spaceman(secret_word):
 
 #These function calls that will start the game
 secret_word = load_word()
-spaceman(secret_word)
+#spaceman(secret_word)
+
+def test_1():
+    assert is_word_guessed("hello", ['h','e','l']) == False
+    assert is_word_guessed("disguise", ['i','s','e','u','d','g']) == True
+
+def test_2():
+    assert get_guessed_word("tiger", ['t','i']) == "ti___"
+    assert get_guessed_word("panther", ['p','a','n','t','h','e','r']) == "panther"
+
+def test_3():
+    assert is_guess_in_word('g', "hacker") == False
+    assert is_guess_in_word('b', "banana") == True
