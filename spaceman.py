@@ -163,15 +163,15 @@ def spaceman(secret_word):
 secret_word = load_word()
 #spaceman(secret_word)
 
-def test_1():
+def test_is_word_guessed():
     assert is_word_guessed("hello", ['h','e','l']) == False
     assert is_word_guessed("disguise", ['i','s','e','u','d','g']) == True
 
-def test_2():
+def test_get_guessed_word():
     assert get_guessed_word("tiger", ['t','i']) == "ti___"
     assert get_guessed_word("lion", ['s']) == "____"
     assert get_guessed_word("panther", ['p','a','n','t','h','e','r']) == "panther"
 
-def test_3():
+def test_is_guess_in_word():
     assert is_guess_in_word('g', "hacker") == False
     assert is_guess_in_word('b', "banana") == True
